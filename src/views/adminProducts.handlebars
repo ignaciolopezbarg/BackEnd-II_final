@@ -1,0 +1,67 @@
+<!-- src/views/adminProducts.handlebars -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Listado de Productos Administrador </title>
+     <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-6">
+    <h1 class="text-3xl font-bold mb-6">Product List</h1>
+    <header class="mb-4 flex justify-between items-center">
+        <h2 class="text-xl">Welcome, {{user.first_name}} {{user.last_name}}</h2>
+        <a href="/logout" class="text-blue-500 hover:underline">Logout</a>
+    </header>
+    
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-3 px-4 border-b text-left">Title</th>
+                    <th class="py-3 px-4 border-b text-left">Description</th>
+                    <th class="py-3 px-4 border-b text-left">Code</th>
+                    <th class="py-3 px-4 border-b text-left">Price</th>
+                    <th class="py-3 px-4 border-b text-left">Stock</th>
+                    <th class="py-3 px-4 border-b text-left">Category</th>
+                    <th class="py-3 px-4 border-b text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr class="hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b">{{this.title}}</td>
+                    <td class="py-2 px-4 border-b">{{this.description}}</td>
+                    <td class="py-2 px-4 border-b">{{this.code}}</td>
+                    <td class="py-2 px-4 border-b">${{this.price}}</td>
+                    <td class="py-2 px-4 border-b">{{this.stock}}</td>
+                    <td class="py-2 px-4 border-b">{{this.category}}</td>
+                    <td class="py-2 px-4 border-b">
+                        <a href="/admin/edit/{{this.id}}" class="text-blue-500 hover:underline">Edit</a>
+                        <form action="/admin/delete/{{this.id}}" method="POST" style="display:inline;">
+                            <button type="submit" class="text-red-500 hover:underline ml-2">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="pagination" class="mt-4 flex justify-between items-center">
+        {{#if hasPrevPage}}
+            <a href="?page={{prevPage}}" class="text-blue-500 hover:underline">Previous</a>
+        {{/if}}
+        <span class="text-gray-700">Page {{page}} of {{totalPages}}</span>
+        {{#if hasNextPage}}
+            <a href="?page={{nextPage}}" class="text-blue-500 hover:underline">Next</a>
+        {{/if}}
+    </div>
+    
+    <div class="mt-4">
+        <a href="/admin/create" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Create New Product</a>
+    </div>
+</body>
+
+</html>
