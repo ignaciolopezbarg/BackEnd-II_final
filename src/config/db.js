@@ -1,13 +1,11 @@
-import mongoose from 'mongoose';
-
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 const connectDB = async () => {
-  try {
-    await mongoose.connect('mongodb+srv://nacho:holanacho@cluster0.g6mfb4u.mongodb.net/entregaFinalBE2?retryWrites=true&w=majority&appName=Cluster0');
-    console.log('MongoDB connected');
-  } catch (error) {
-    console.error('Error connecting to MongoDB', error);
-    process.exit(1);
-  }
+  dotenv.config();
+  mongoose
+    .connect(process.env.MONGO_URL)
+    .then(() => console.log("Great! Connecting MongoDB"))
+    .catch((error) => console.log("Error connecting to MongoDB:", error));
 };
 
 export default connectDB;
